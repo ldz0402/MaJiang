@@ -2,7 +2,7 @@
 
 #include "Game.h"
 
-#define MAX_NUM 10
+#define MAX_NUM 10000
 
 using namespace std;
 
@@ -21,9 +21,7 @@ int main(){
     Game* game = new Game();
 
     while(index < MAX_NUM && !flag){
-
         game->begin();
-        game->show();
         game->run(flag);
         game->reset();
         index++;
@@ -39,6 +37,7 @@ int main(){
         
     }
 
+    game->end();
     game->~Game();
 
     end = clock();
