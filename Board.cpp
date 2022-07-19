@@ -10,10 +10,10 @@ BaseBoard::BaseBoard(BoardKind kind):Kind(kind){ }
 BoardKind BaseBoard::getKind() const{ return Kind; }
 
 bool BaseBoard::operator==(const BaseBoard& baseBoard) const{
-    return getKind() == baseBoard.getKind();
+    return this->getKind() == baseBoard.getKind();
 }
 bool BaseBoard::operator<(const BaseBoard& baseBoard) const{
-    return getKind() < baseBoard.getKind();
+    return this->getKind() < baseBoard.getKind();
 }
 
 void BaseBoard::show() {
@@ -69,9 +69,9 @@ bool NumBoard::operator<(const NumBoard& numBoard) const{
     }
     return getKind() < numBoard.getKind();
 }
-// bool NumBoard::operator<(const StrBoard& strBoard) const{
-//     return true;
-// }
+bool NumBoard::operator<(const StrBoard& strBoard) const{
+    return true;
+}
 
 int NumBoard::getNum() const{
     return Num;

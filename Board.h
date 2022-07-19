@@ -18,6 +18,10 @@ enum WinKind{
     ShiSanYao
 };
 
+class NumBoard;
+class StrBoard;
+
+
 class BaseBoard{
     public:
         BaseBoard();
@@ -39,7 +43,7 @@ class NumBoard:public BaseBoard{
         virtual void show() override;
         bool operator==(const NumBoard& numBoard) const;
         bool operator<(const NumBoard& numBoard) const;
-        //bool operator<(const StrBoard& strBoard) const;
+        bool operator<(const StrBoard& strBoard) const;
         int getNum() const;
     private:
         int Num;
