@@ -24,27 +24,26 @@ int main(){
     long long ends_index = 0;
     int ten=1;
 
-    while(index < 100000 && !flag){
-        //printf("第%-8d次开局:\n",index);
+    Game* game = new Game();
+
+    while(index < 100000000 && !flag){
+
+        game->begin();
+        game->run(flag);
+        game->reset();
+        index++;
 
         if((index+1)%ten == 0){
             ends[ends_index] = clock();
-
             double ret = double(ends[ends_index] - begin) / CLOCKS_PER_SEC;
             cout <<ten<<"次总运行时间为: " << ret << "秒!" << endl;
-
             ends_index++;
-            ten = ten*10;
+            ten = ten<1000000? ten*10:ten+1000000;
         }
-
-
-        Game* game = new Game();
-        game->begin();
-        //game.show();
-        game->run(flag);
-        index++;
-        game->~Game();
+        
     }
+
+    game->~Game();
 
     end = clock();
     double ret = double(end - begin) / CLOCKS_PER_SEC;

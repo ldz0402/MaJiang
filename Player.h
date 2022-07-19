@@ -16,6 +16,8 @@ class Player{
         void remove();
         bool win(std::pair<WinKind,std::set<BaseBoard*>> win_format);
         std::string getName() const;
+        std::set<BaseBoard*> getBoards();
+        void reset();
         void show() const;
         
     private:

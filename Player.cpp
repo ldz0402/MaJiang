@@ -14,6 +14,21 @@ Player::~Player(){
     DelBoards.clear();
 }
 
+std::set<BaseBoard*> Player::getBoards(){
+    std::set<BaseBoard*> res;
+    for(auto board:Boards){
+        res.insert(board);
+    }
+    for(auto board:DelBoards){
+        res.insert(board);
+    }
+    return res;
+}
+
+void Player::reset(){
+    Boards.clear();
+    DelBoards.clear();
+}
 
 void Player::insert(BaseBoard* baseBoard){
     Boards.insert(baseBoard);

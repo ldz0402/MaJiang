@@ -3,7 +3,7 @@
         {
             "type": "shell",
             "label": "build_prelanunch",
-            "command": "/usr/bin/g++ -o main.exe main.cpp Board.cpp Player.cpp Game.cpp",
+            "command": "/usr/bin/g++ -g -o main.exe main.cpp Board.cpp Player.cpp Game.cpp",
             "group": {
               "kind": "build",
               "isDefault": true

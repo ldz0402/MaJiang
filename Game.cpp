@@ -138,7 +138,7 @@ void Game::begin(){
         //printf("给  %-5s 发牌……\n", players[player_index]->getName().c_str());
         std::set<BaseBoard *> res = getBoards(4);
         for (BaseBoard *child : res) {
-          players[player_index]->insert(child);
+          this->players[player_index]->insert(child);
         }
         player_index = (player_index + 1) % players.size();
       }
@@ -150,7 +150,7 @@ void Game::begin(){
         //printf("给  %-5s 发牌……\n",players[player_index]->getName().c_str());
         std::set<BaseBoard*> res = getBoards(1);
         for(BaseBoard* child:res){
-            players[player_index]->insert(child);
+            this->players[player_index]->insert(child);
         }
         player_index = (player_index+1)%players.size();
     }
@@ -167,13 +167,13 @@ void Game::end(){
 
 void Game::run(bool& flag){
     //printf("从第%d位玩家:%s开始摸牌\n",player_index,players[player_index]->getName().c_str());
-    std::set<BaseBoard*> boards = getBoards(1);
-    players[player_index]->insert(*boards.begin());
+    std::set<BaseBoard*> boards = this->getBoards(1);
+    this->players[player_index]->insert(*boards.begin());
+
     if(players[player_index]->win(*win_formats.begin())){
         printf("天胡 十三幺！！！\n");
         flag = true;
     }else{
-        //players[player_index]->show();
         flag = false;
     }
     player_index = (player_index + 1)%players.size();
@@ -192,6 +192,17 @@ std::set<BaseBoard*> Game::getBoards(int num){
         }
     }
     return res;
+}
+
+void Game::reset(){
+    for(auto player:players){
+        auto boards = player->getBoards();
+        for(auto board:boards){
+            this->Boards.push_back(board);
+            this->BoardNums++;
+        }
+        player->reset();
+    }
 }
 
 void Game::show() const{

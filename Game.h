@@ -18,6 +18,7 @@ class Game{
         void begin();
         void end();
         void run(bool& flag);
+        void reset();
         void show() const;
         std::set<BaseBoard*> getBoards(int num=1);
 
