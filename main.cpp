@@ -44,7 +44,7 @@ int main(){
 
     double ret = double(clock() - begin) / CLOCKS_PER_SEC;
     printf("\n                                                             \
-               循环 %-10d 次程序执行时间为: %-10f 秒.\n",index,ret);
+               循环 %-10lld 次程序执行时间为: %-10f 秒.\n",index,ret);
     
     return 0;
 }
