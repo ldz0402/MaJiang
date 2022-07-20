@@ -1,22 +1,27 @@
 #include <iostream>
+#include <set>
 
 #include "Game.h"
 
-#define MAX_NUM 10000
+#define MAX_NUM 100000000
 
 using namespace std;
 
+set<int> Tags = {
+    10,       100,      500,      1000,     2000,      5000,
+    10000,    20000,    50000,    100000,   1000000,   2000000,
+    3000000,  4000000,  5000000,  6000000,  7000000,   8000000,
+    9000000,  10000000, 20000000, 30000000, 40000000,  50000000,
+    60000000, 70000000, 80000000, 90000000, 100000000
+};
+
 int main(){
     srand((unsigned)time(NULL));
-    int index = 0;
+    long long int index = 0;
     bool flag = false;
 
-    time_t begin, end;
+    time_t begin;
     begin = clock();
-
-    time_t ends[100];
-    long long ends_index = 0;
-    int ten=1;
 
     Game* game = new Game();
 
@@ -26,13 +31,10 @@ int main(){
         game->reset();
         index++;
 
-        if((index+1)%ten == 0 && ends_index < 100){
-            ends[ends_index] = clock();
-            double ret = double(ends[ends_index] - begin) / CLOCKS_PER_SEC;
+        if(Tags.count(index)){
+            double ret = double(clock() - begin) / CLOCKS_PER_SEC;
             printf("                                                        \
-                    循环 %-10d 次程序执行时间为: %-10f 秒.\n",ten,ret);
-            ends_index++;
-            ten = ten<1000000? ten*10:ten+1000000;
+                    循环 %-10lld 次程序执行时间为: %-10f 秒.\n",index,ret);
         }
         
     }
@@ -40,8 +42,7 @@ int main(){
     game->end();
     game->~Game();
 
-    end = clock();
-    double ret = double(end - begin) / CLOCKS_PER_SEC;
+    double ret = double(clock() - begin) / CLOCKS_PER_SEC;
     printf("\n                                                             \
                循环 %-10d 次程序执行时间为: %-10f 秒.\n",index,ret);
     
