@@ -2,6 +2,7 @@
 
 #include <set>
 #include <vector>
+#include <algorithm>
 #include <stdlib.h>
 
 
@@ -11,16 +12,26 @@ std::string Player::getName() const{
     return Name;
 }
 
+bool compNum(const NumBoard* b1,const NumBoard* b2){
+    return b1->getNum() < b2->getNum();
+}
+bool compStr(const StrBoard* b1,const StrBoard* b2){
+    return b1->getName() < b2->getName();
+}
+
 void Player::insert(NumBoard *numBoard){
     switch (numBoard->getKind()) {
         case BoardKind::Wan:
-            Wans.insert(numBoard);
+            Wans.push_back(numBoard);
+            sort(Wans.begin(),Wans.end(),compNum);
             break;
         case BoardKind::Tiao:
-            Tiaos.insert(numBoard);
+            Tiaos.push_back(numBoard);
+            sort(Tiaos.begin(),Tiaos.end(),compNum);
             break;
         case BoardKind::Tong:
-            Tongs.insert(numBoard);
+            Tongs.push_back(numBoard);
+            sort(Tongs.begin(),Tongs.end(),compNum);
             break;
         default:
             break;
@@ -30,14 +41,17 @@ void Player::insert(NumBoard *numBoard){
 void Player::insert(StrBoard *strBoard){
     switch (strBoard->getKind()){
         case BoardKind::Feng:
-            Fengs.insert(strBoard);
+            Fengs.push_back(strBoard);
+            sort(Fengs.begin(),Fengs.end(),compStr);
             break;
         case BoardKind::Hua:
-            Huas.insert(strBoard);
+            Huas.push_back(strBoard);
+            sort(Huas.begin(),Huas.end(),compStr);
             break;
         default:
             break;
     }
+
 }
 
 static std::string getReplacedString(int strSize,int index){
@@ -85,7 +99,7 @@ void Player::remove(){
         for(auto wan:Wans){
             if(i==num){
                 DelNumBoards.insert(wan);
-                Wans.erase(wan);
+                Wans.erase(Wans.begin()+i-1);
                 break;
             }
             ++i;
@@ -96,7 +110,7 @@ void Player::remove(){
         for(auto tiao:Tiaos){
             if(i==num){
                 DelNumBoards.insert(tiao);
-                Tiaos.erase(tiao);
+                Tiaos.erase(Tiaos.begin()+i-1);
                 break;
             }
             ++i;
@@ -108,7 +122,7 @@ void Player::remove(){
         for(auto tong:Tongs){
             if(i==num){
                 DelNumBoards.insert(tong);
-                Tongs.erase(tong);
+                Tongs.erase(Tongs.begin()+i-1);
                 break;
             }
             ++i;
@@ -120,7 +134,7 @@ void Player::remove(){
         for(auto feng:Fengs){
             if(i==num){
                 DelStrBoards.insert(feng);
-                Fengs.erase(feng);
+                Fengs.erase(Fengs.begin()+i-1);
                 break;
             }
             ++i;
@@ -244,13 +258,42 @@ std::pair<std::set<NumBoard*>,std::set<StrBoard*>> Player::getOwnBoards() const{
 
 
 
-std::set<NumBoard*> Player::getWanBoards() const{ return Wans;}
-std::set<NumBoard*> Player::getTiaoBoards() const{ return Tiaos;}
-std::set<NumBoard*> Player::getTongBoards() const{ return Tongs;}
+std::set<NumBoard*> Player::getWanBoards() const{ 
+    std::set<NumBoard*> res;
+    for(auto wan:Wans){
+        res.insert(wan);
+    }
+    return res;
+}
+std::set<NumBoard*> Player::getTiaoBoards() const{ 
+    std::set<NumBoard*> res;
+    for(auto tiao:Tiaos){
+        res.insert(tiao);
+    }
+    return res;
+}
+std::set<NumBoard*> Player::getTongBoards() const{ 
+    std::set<NumBoard*> res;
+    for(auto tong:Tongs){
+        res.insert(tong);
+    }
+    return res;
+}
 
-std::set<StrBoard*> Player::getFengBoards() const{ return Fengs;}
-std::set<StrBoard*> Player::getHuaBoards() const{ return Huas;}
-
+std::set<StrBoard*> Player::getFengBoards() const{ 
+    std::set<StrBoard*> res;
+    for(auto feng:Fengs){
+        res.insert(feng);
+    }
+    return res;
+}
+std::set<StrBoard*> Player::getHuaBoards() const{ 
+    std::set<StrBoard*> res;
+    for(auto hua:Huas){
+        res.insert(hua);
+    }
+    return res;
+}
 void Player::reset(){
     Wans.clear();
     Tiaos.clear();

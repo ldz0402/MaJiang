@@ -4,6 +4,7 @@
 #include "Board.h"
 
 #include <set>
+#include <vector>
 #include <map>
 
 class Player{
@@ -49,14 +50,14 @@ class Player{
     private:
         std::string Name;
 
-        std::set<NumBoard*> Wans;
-        std::set<NumBoard*> Tiaos;
-        std::set<NumBoard*> Tongs;
+        std::vector<NumBoard*> Wans;
+        std::vector<NumBoard*> Tiaos;
+        std::vector<NumBoard*> Tongs;
 
         std::set<NumBoard*> DelNumBoards;
 
-        std::set<StrBoard*> Fengs;
-        std::set<StrBoard*> Huas;
+        std::vector<StrBoard*> Fengs;
+        std::vector<StrBoard*> Huas;
 
         std::set<StrBoard*> DelStrBoards;
 
