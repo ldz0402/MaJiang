@@ -10,25 +10,49 @@
 class Game{
     public:
         Game(bool Feng = true,bool Hua = false);
-        ~Game();
-        int getBoardNums() const;
-        void init_win_formats();
-        void init_Players();
+        // 初始化
+        void init();
 
+        // 获取当前所剩牌数
+        int getBoardNums() const;
+
+        // 发牌
+        std::pair<std::set<NumBoard*>,std::set<StrBoard*>> getBoards(int num=1);
+
+        // 游戏开始
         void begin();
+
+        // 游戏进行
+        void run(bool& hasWin);
+
+        // 游戏结束
         void end();
-        void run(bool& flag);
-        void reset();
+        
+        // 重新开始游戏
+        void reBegin();
+
+        // 展示当前玩家的牌
         void show() const;
-        std::set<BaseBoard*> getBoards(int num=1);
+
+        ~Game();
 
     private:
+        // 4位玩家
+        std::vector<Player*> Players;
+
+        // 当前所剩牌数
         int BoardNums;
-        std::vector<BaseBoard*> Boards;
-        typedef std::pair<WinKind,std::set<BaseBoard*>> Win_Format;
-        std::map<WinKind,std::set<BaseBoard*>>win_formats;
-        std::vector<Player*> players;
+
+        std::vector<NumBoard*> NumBoards;
+        std::vector<StrBoard*> StrBoards;
+        void insert(NumBoard* numBoard);
+        void insert(StrBoard* strBoard);
+        
+        // 当前庄家
         int player_index;
+
+        // 游戏轮数
+        int game_index;
 };
 
 #endif

@@ -3,7 +3,7 @@
 
 #include "Game.h"
 
-#define MAX_NUM 100000000
+#define MAX_NUM 10000
 
 using namespace std;
 
@@ -17,34 +17,17 @@ set<int> Tags = {
 
 int main(){
     srand((unsigned)time(NULL));
-    long long int index = 0;
-    bool flag = false;
-
     time_t begin;
     begin = clock();
-
+    
     Game* game = new Game();
+    game->init();
 
-    while(index < MAX_NUM && !flag){
-        game->begin();
-        game->run(flag);
-        game->reset();
-        index++;
-
-        if(Tags.count(index)){
-            double ret = double(clock() - begin) / CLOCKS_PER_SEC;
-            printf("                                                        \
-                    循环 %-10lld 次程序执行时间为: %-10f 秒.\n",index,ret);
-        }
-        
-    }
+    game->reBegin();
 
     game->end();
-    game->~Game();
 
-    double ret = double(clock() - begin) / CLOCKS_PER_SEC;
-    printf("\n                                                             \
-               循环 %-10lld 次程序执行时间为: %-10f 秒.\n",index,ret);
     
+    double ret = double(clock() - begin) / CLOCKS_PER_SEC;
     return 0;
 }

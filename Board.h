@@ -3,8 +3,8 @@
 
 #include <iostream>
 
-enum BoardKind{
-    unknown = 0,
+enum class BoardKind{
+    Unknown = 0,
     Wan,
     Tong,
     Tiao,
@@ -12,9 +12,9 @@ enum BoardKind{
     Hua
 };
 
-enum WinKind{
-    null = 0,
-    normal,
+enum class WinKind{
+    Unknow = 0,
+    Normal,
     ShiSanYao
 };
 
@@ -24,7 +24,6 @@ class StrBoard;
 
 class BaseBoard{
     public:
-        BaseBoard();
         BaseBoard(BoardKind kind);
         virtual void show();
         BoardKind getKind() const;
@@ -38,7 +37,6 @@ class BaseBoard{
 
 class NumBoard:public BaseBoard{
     public:
-        NumBoard();
         NumBoard(BoardKind boardKind,int num);
         virtual void show() override;
         bool operator==(const NumBoard& numBoard) const;
@@ -52,7 +50,6 @@ class NumBoard:public BaseBoard{
 
 class StrBoard:public BaseBoard{
     public:
-        StrBoard();
         StrBoard(BoardKind boardkind,std::string name);
         virtual void show() override;
         bool operator==(const StrBoard& strBoard) const;
