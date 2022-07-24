@@ -27,6 +27,32 @@ int main(){
 
     game->end();
 
+    // Player* p1=new Player("ldz");
+
+    // p1->insert(new NumBoard(BoardKind::Wan,1));
+    // p1->insert(new NumBoard(BoardKind::Wan,1));
+    // p1->insert(new NumBoard(BoardKind::Wan,1));
+
+    // p1->insert(new NumBoard(BoardKind::Wan,1));
+    // p1->insert(new NumBoard(BoardKind::Wan,2));
+    // p1->insert(new NumBoard(BoardKind::Wan,3));
+    
+    // p1->insert(new NumBoard(BoardKind::Wan,4));
+    // p1->insert(new NumBoard(BoardKind::Wan,5));
+    // p1->insert(new NumBoard(BoardKind::Wan,6));
+    
+    // p1->insert(new NumBoard(BoardKind::Tiao,7));
+    // p1->insert(new NumBoard(BoardKind::Tiao,7));
+    // p1->insert(new NumBoard(BoardKind::Tiao,7));
+
+    // p1->insert(new StrBoard(BoardKind::Feng,"东"));
+    // p1->insert(new StrBoard(BoardKind::Feng,"东"));
+
+    // if(p1->win()){
+    //     printf("胡牌!\n");
+    // }
+
+
     
     double ret = double(clock() - begin) / CLOCKS_PER_SEC;
     return 0;

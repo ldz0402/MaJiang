@@ -159,6 +159,17 @@ void Game::begin(){
       loop++;
     }
 
+    for (int i = 0; i < Players.size(); ++i) {
+        std::pair<std::set<NumBoard*>,std::set<StrBoard*>> res = getBoards(1);
+        for(auto numBoard:res.first){
+            Players[player_index]->insert(numBoard);
+        }
+        for(auto strBoard:res.second){
+            Players[player_index]->insert(strBoard);
+        }
+        player_index = (player_index + 1) % Players.size();
+    }
+
     printf("-- 结束发牌\n");
 
 }
@@ -172,7 +183,7 @@ void Game::run(bool& hasWin){
       for (int i = 0; i < Players.size(); ++i) {
         std::pair<std::set<NumBoard*>,std::set<StrBoard*>> res = getBoards(1);
         if(res.first.size()>0 || res.second.size()>0){
-            //system("clear");
+            system("clear");
             printf("\n\n-- %-6s摸牌\n",Players[player_index]->getName().c_str());
             for(auto numBoard:res.first){
                 Players[player_index]->insert(numBoard);
@@ -183,7 +194,9 @@ void Game::run(bool& hasWin){
 
             if(Players[player_index]->win(WinKind::ShiSanYao)){
                 hasWin = true;
-                printf("玩家%-6s获胜:十三幺！\n",Players[player_index]->getName().c_str());
+                return;
+            }else if(Players[player_index]->win()){
+                hasWin = true;
                 return;
             }
 
@@ -231,6 +244,9 @@ void Game::reBegin(){
     begin();
     bool hasWin=false;
     run(hasWin);
+    if(hasWin){
+        printf("\n\n玩家%-6s获胜!\n\n",Players[player_index]->getName().c_str());
+    }
 
 }
 

@@ -2,6 +2,7 @@
 
 #include <set>
 #include <vector>
+#include <map>
 #include <algorithm>
 #include <stdlib.h>
 
@@ -67,8 +68,7 @@ static std::string getReplacedString(int strSize,int index){
 }
 
 void Player::remove(){
-    // 暂时随便打一张牌出去
-    // todo
+    // 玩家选一张牌打出去
     printf("-- %-6s打牌\n",getName().c_str());
     std::string str = "";
     int four = Wans.size() + Tiaos.size() + Tongs.size();
@@ -204,6 +204,105 @@ bool Player::win(WinKind wk){
     }
     return flag;
 }
+
+static bool isFormat(std::vector<int> vec){
+    if(vec.size() == 0){
+        return true;
+    }else if(vec.size() < 3 || vec.size() % 3 != 0){
+        return false;
+    }
+
+    bool res = false;
+
+    // vec[0] 位于 AAA型
+    if(vec[0] == vec[1] && vec[1] == vec[2]){
+        std::vector<int> left(vec.begin()+3,vec.end());
+        if(isFormat(left)){
+            res = true;
+        }
+    }
+    
+    
+    // vec[0] 位于 ABC型
+    std::vector<int> left;
+    int i=0,j=0;
+    for(int k=1;k<vec.size();++k){
+        if(vec[k]==vec[0]+1){
+            i=k;
+        }
+        if(vec[k]==vec[0]+2){
+            j=k;
+        }
+    }
+    if(i!=0 && j!=0){
+        std::vector<int> left;
+        for(int k=1;k<vec.size();++k){
+            if(k==i || k==j){
+                continue;
+            }
+            left.push_back(vec[k]);
+        }
+        if(isFormat(left)){
+            res = true;
+        }
+    }
+
+
+    return res;
+}
+
+bool Player::win(){
+    bool res = false;
+    // 当前牌，用int表示
+    std::vector<int> nums;
+    for(auto board:Wans){
+        nums.push_back(board->getNum());
+    }
+    for(auto board:Tiaos){
+        nums.push_back(board->getNum()+10);
+    }
+    for(auto board:Tongs){
+        nums.push_back(board->getNum()+20);
+    }
+    
+    std::map<std::string,int> fengToInt = {
+        {"东",1000},{"西",2000},
+        {"南",3000},{"北",4000},
+        {"中",5000},{"發",6000},
+        {"白",7000}
+        };
+
+    for(auto board:Fengs){
+        nums.push_back(fengToInt[board->getName()]);
+    }
+
+    sort(nums.begin(),nums.end());
+
+    // 取走nums中成对的将
+    for(int i=0;i<nums.size()-1;++i){
+        if(nums[i]==nums[i+1]){
+            // 取走将后剩下的牌
+            std::vector<int> left;
+            for(int j=0;j<nums.size();++j){
+                if(j==i||j==i+1){
+                    continue;
+                }else{
+                    left.push_back(nums[j]);
+                }
+            }
+
+            // 判断left能否满足 m*AAA + n*ABC
+            if(isFormat(left)){
+                res = true;
+                break;
+            }
+        }
+
+    }
+
+    return res;
+}
+
 
 std::pair<std::set<NumBoard*>,std::set<StrBoard*>> Player::getAllBoards() const{
     std::pair<std::set<NumBoard*>,std::set<StrBoard*>> res;

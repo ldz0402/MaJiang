@@ -23,6 +23,7 @@ class Player{
 
         // 判断是否糊牌
         bool win(WinKind wk);
+        bool win();
         
 
         // 返回玩家所有的牌，包括现有的和已经打出去的
